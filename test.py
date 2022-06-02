@@ -8,6 +8,9 @@ from WilloughbyEngine import WilloughbyEngine
 from NubbinBattery import NubbinBattery
 from SpindlerBattery import SpindlerBattery
 
+from Octoprime import Octoprime
+from Carrigan import Carrigan
+
 class TestCapulet(unittest.TestCase):
     def test_engine_should_be_serviced(self):
         last_service_mileage = 0
@@ -61,15 +64,38 @@ class TestNubbin(unittest.TestCase):
 class TestSpindler(unittest.TestCase):
     def test_battery_should_be_serviced(self):
         today = datetime.today().date()
-        last_service_date = today.replace(year=today.year - 3)
+        last_service_date = today.replace(year=today.year - 4)
         battery = SpindlerBattery(last_service_date, today)
         self.assertTrue(battery.needs_service())
 
     def test_battery_should_not_be_serviced(self):
         today = datetime.today().date()
-        last_service_date = today.replace(year=today.year - 1)
+        last_service_date = today.replace(year=today.year - 2)
         battery = SpindlerBattery(last_service_date, today)
         self.assertFalse(battery.needs_service())
+
+
+class TestOctoprime(unittest.TestCase):
+    def test_battery_should_be_serviced(self):
+        worn_array = [0.9, 0.8, 0.9, 0.9]
+        tire = Octoprime(worn_array)
+        self.assertTrue(tire.needs_service())
+    
+    def test_battery_should_not_be_serviced(self):
+        worn_array = [0.1, 0.1, 0.1, 0.1]
+        tire = Octoprime(worn_array)
+        self.assertFalse(tire.needs_service())
+
+class TestCarrigan(unittest.TestCase):
+    def test_battery_should_be_serviced(self):
+        worn_array = [0.9, 0.8, 0.9, 0.9]
+        tire = Carrigan(worn_array)
+        self.assertTrue(tire.needs_service())
+    
+    def test_battery_should_not_be_serviced(self):
+        worn_array = [0.1, 0.1, 0.1, 0.1]
+        tire = Carrigan(worn_array)
+        self.assertFalse(tire.needs_service())
 
 if __name__ == '__main__':
     unittest.main()
